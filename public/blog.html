@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Website</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+      body {
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003d69;">
+    <a class="navbar-brand" href="#">
+      <img src="logo.png" width="30" height="30" alt="">Blog website
+    </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+              <a class="nav-link active" href="blog.html">Home </a>
+            </li>
+          <li class="nav-item">
+            <a class="nav-link" href="myblog.html">My Blogs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="allblog.html">All Blogs</a>
+          </li>
+          <li class="nav-item">
+            <form action="/logout" method="post">
+                <button type="submit" class="nav-link btn btn-link" style="outline: none;">Logout</button>
+            </form>
+        </li>        
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Create a Blog</h2>
+        <form action="/createblog" method="post">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" class="form-control" id="description" name="description" required>
+            </div>
+            <div class="form-group">
+                <label for="information">Information:</label>
+                <textarea class="form-control" id="information" name="information" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+        
+        
+    </div>
+
+    
+    <div class="container mt-5">
+      <h2>All Blogs</h2>
+      <div id="blogsContainer">
+          <!-- Example blog card with real content and action buttons -->
+          <div class="card mb-3">
+              <div class="card-body">
+                  <h5 class="card-title">Blog one</h5>
+                  <p class="card-text" style="font-weight: bold;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum repudiandae deleniti nesciunt doloribus adipisci aliquid soluta molestiae, eius harum ratione iste dolore iusto dolorem vel ipsum repellat, doloremque voluptatum, quod minima fuga aut expedita optio. Velit molestiae nisi delectus sunt reprehenderit! Distinctio consequuntur tempore explicabo, totam dolore dolores mollitia? Molestiae.</p>
+                  <div class="btn-group" role="group" aria-label="Blog Actions">
+                      <button type="button" class="btn btn-outline-primary">Edit</button>
+                  </div>
+                  <div class="btn-group" role="group" aria-label="Blog Actions">
+                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                </div>
+              </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Blog one</h5>
+                <p class="card-text" style="font-weight: bold;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum repudiandae deleniti nesciunt doloribus adipisci aliquid soluta molestiae, eius harum ratione iste dolore iusto dolorem vel ipsum repellat, doloremque voluptatum, quod minima fuga aut expedita optio. Velit molestiae nisi delectus sunt reprehenderit! Distinctio consequuntur tempore explicabo, totam dolore dolores mollitia? Molestiae.</p>
+                <div class="btn-group" role="group" aria-label="Blog Actions">
+                    <button type="button" class="btn btn-outline-primary">Edit</button>
+                </div>
+                <div class="btn-group" role="group" aria-label="Blog Actions">
+                  <button type="button" class="btn btn-outline-danger">Delete</button>
+              </div>
+            </div>
+        </div>
+          <!-- Repeat the above card for each blog -->
+      </div>
+      
+  </div>
+  
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+
+</body>
+</html>
