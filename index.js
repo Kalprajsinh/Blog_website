@@ -107,10 +107,10 @@ app.get('/blogs', async (req, res) => {
     }
 });
 
-app.get('/edit-blog/:id', async (req, res) => {
+app.get('/edit-blog/:email', async (req, res) => {
     try {
-      const blogId = req.params.id;
-      const blog = await Blog.findById(blogId);
+      const blogemail = req.params.email;
+      const blog = await Blog.findById(blogemail);
   
       if (!blog) {
         return res.status(404).send('Blog not found');
@@ -124,12 +124,12 @@ app.get('/edit-blog/:id', async (req, res) => {
   });
   
   // Route to update a blog
-  app.post('/update-blog/:id', async (req, res) => {
+  app.post('/update-blog/:email', async (req, res) => {
     try {
-      const blogId = req.params.id;
+      const blogemail = req.params.email;
       const { title, description, information } = req.body;
   
-      const updatedBlog = await Blog.findByIdAndUpdate(blogId, { title, description, information }, { new: true });
+      const updatedBlog = await Blog.findByIdAndUpdate(blogemail, { title, description, information }, { new: true });
   
       if (!updatedBlog) {
         return res.status(404).send('Blog not found');
@@ -142,11 +142,11 @@ app.get('/edit-blog/:id', async (req, res) => {
   });
   
   // Route to delete a blog
-  app.post('/delete-blog/:id', async (req, res) => {
+  app.post('/delete-blog/:email', async (req, res) => {
     try {
-      const blogId = req.params.id;
+      const blogemail = req.params.email;
   
-      const deletedBlog = await Blog.findByIdAndDelete(blogId);
+      const deletedBlog = await Blog.findByIdAndDelete(blogemail);
   
       if (!deletedBlog) {
         return res.status(404).send('Blog not found');
