@@ -2,13 +2,16 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
+const path = require('path');
 
 const app = express();
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
+// Set the view engine to EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 mongoose.connect('mongodb+srv://kalpraj51:FEkXXxZu0SeNXWiq@cluster0.dly4bej.mongodb.net/Blog?retryWrites=true&w=majority&appName=Cluster0')
   .then(() => console.log("Connected to Database"))
@@ -42,7 +45,7 @@ app.post('/signup', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10); 
         const user = new User({ username, email, password: hashedPassword });
         await user.save();
-        res.redirect('login.html'); 
+        res.redirect('/login.html'); 
     } catch (err) {
         res.status(400).send(`Error signing up user: ${err.message}`);
     }
@@ -62,7 +65,7 @@ app.post('/login', async (req, res) => {
 
       loggedInUserEmail = email; 
       
-      res.redirect('blog.html'); 
+      res.redirect('/blog'); 
   } catch (err) {
       res.status(500).send(`Error logging in: ${err.message}`);
   }
@@ -78,7 +81,7 @@ app.post('/createblog', async (req, res) => {
         const newBlog = new Blog({ userEmail: loggedInUserEmail, title, description, information });
         await newBlog.save();
         console.log('Blog saved successfully:', newBlog);
-        res.redirect('/blog.html'); 
+        res.redirect('/blog'); 
     } catch (err) {
         console.error('Error creating blog:', err);
         res.status(500).send(`Error creating blog: ${err.message}`);
@@ -89,11 +92,71 @@ app.post('/createblog', async (req, res) => {
 app.get('/my-blogs', async (req, res) => {
     try {
         const userBlogs = await Blog.find({ userEmail: loggedInUserEmail });
-        res.render('blogs', { userBlogs }); 
+        res.render('myblogs', { userBlogs }); 
     } catch (err) {
         res.status(500).send(`Error fetching user blogs: ${err.message}`);
     }
 });
+
+app.get('/blogs', async (req, res) => {
+    try {
+        const allBlogs = await Blog.find();
+        res.render('allblogs', { allBlogs }); 
+    } catch (err) {
+        res.status(500).send(`Error fetching user blogs: ${err.message}`);
+    }
+});
+
+app.get('/edit-blog/:id', async (req, res) => {
+    try {
+      const blogId = req.params.id;
+      const blog = await Blog.findById(blogId);
+  
+      if (!blog) {
+        return res.status(404).send('Blog not found');
+      }
+  
+      // Render an edit form with the fetched blog data
+      res.render('edit-blog', { blog });
+    } catch (err) {
+      res.status(500).send(`Error editing blog: ${err.message}`);
+    }
+  });
+  
+  // Route to update a blog
+  app.post('/update-blog/:id', async (req, res) => {
+    try {
+      const blogId = req.params.id;
+      const { title, description, information } = req.body;
+  
+      const updatedBlog = await Blog.findByIdAndUpdate(blogId, { title, description, information }, { new: true });
+  
+      if (!updatedBlog) {
+        return res.status(404).send('Blog not found');
+      }
+  
+      res.redirect('/my-blogs');
+    } catch (err) {
+      res.status(500).send(`Error updating blog: ${err.message}`);
+    }
+  });
+  
+  // Route to delete a blog
+  app.post('/delete-blog/:id', async (req, res) => {
+    try {
+      const blogId = req.params.id;
+  
+      const deletedBlog = await Blog.findByIdAndDelete(blogId);
+  
+      if (!deletedBlog) {
+        return res.status(404).send('Blog not found');
+      }
+  
+      res.redirect('/my-blogs');
+    } catch (err) {
+      res.status(500).send(`Error deleting blog: ${err.message}`);
+    }
+  });
 
 // Logout
 app.post('/logout', async (req, res) => {

@@ -62,42 +62,29 @@
         
     </div>
 
-    
     <div class="container mt-5">
-      <h2>All Blogs</h2>
+      <h2>My Blogs</h2>
       <div id="blogsContainer">
-          <!-- Example blog card with real content and action buttons -->
-          <div class="card mb-3">
-              <div class="card-body">
-                  <h5 class="card-title">Blog one</h5>
-                  <p class="card-text" style="font-weight: bold;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum repudiandae deleniti nesciunt doloribus adipisci aliquid soluta molestiae, eius harum ratione iste dolore iusto dolorem vel ipsum repellat, doloremque voluptatum, quod minima fuga aut expedita optio. Velit molestiae nisi delectus sunt reprehenderit! Distinctio consequuntur tempore explicabo, totam dolore dolores mollitia? Molestiae.</p>
-                  <div class="btn-group" role="group" aria-label="Blog Actions">
-                      <button type="button" class="btn btn-outline-primary">Edit</button>
+          <% if (userBlogs.length > 0) { %>
+              <% userBlogs.forEach(blog => { %>
+                  <div class="card mb-3">
+                      <div class="card-body">
+                          <h5 class="card-title"><%= blog.title %></h5>
+                          <p class="card-text"><%= blog.description %></p>
+                          <p class="card-text"><%= blog.information %></p>
+                          <div class="btn-group" role="group" aria-label="Blog Actions">
+                              <a href="/edit-blog/<%= blog._id %>" class="btn btn-outline-primary">Edit</a>
+                              <form action="/delete-blog/<%= blog._id %>" method="post" style="display: inline;">
+                                  <button type="submit" class="btn btn-outline-danger">Delete</button>
+                              </form>
+                          </div>
+                      </div>
                   </div>
-                  <div class="btn-group" role="group" aria-label="Blog Actions">
-                    <button type="button" class="btn btn-outline-danger">Delete</button>
-                </div>
-              </div>
-          </div>
-          <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">Blog one</h5>
-                <p class="card-text" style="font-weight: bold;">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum repudiandae deleniti nesciunt doloribus adipisci aliquid soluta molestiae, eius harum ratione iste dolore iusto dolorem vel ipsum repellat, doloremque voluptatum, quod minima fuga aut expedita optio. Velit molestiae nisi delectus sunt reprehenderit! Distinctio consequuntur tempore explicabo, totam dolore dolores mollitia? Molestiae.</p>
-                <div class="btn-group" role="group" aria-label="Blog Actions">
-                    <button type="button" class="btn btn-outline-primary">Edit</button>
-                </div>
-                <div class="btn-group" role="group" aria-label="Blog Actions">
-                  <button type="button" class="btn btn-outline-danger">Delete</button>
-              </div>
-            </div>
-        </div>
-          <!-- Repeat the above card for each blog -->
+              <% }) %>
+          <% } else { %>
+              <p>No blogs found.</p>
+          <% } %>
       </div>
-      
-  </div>
-  
   </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
